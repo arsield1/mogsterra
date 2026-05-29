@@ -1,4 +1,48 @@
+import asyncio
+import logging
+from aiogram import Bot, Dispatcher, types
+from aiogram.filters import CommandStart
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, WebAppInfo, InlineKeyboardMarkup, InlineKeyboardButton
 
+# Токен вашего бота (полученный у @BotFather)
+BOT_TOKEN = "ВАШ_ТОКЕН_БОТА"
+
+# URL вашего мини-приложения (обязательно должен быть https)
+MINI_APP_URL = "https://your-mini-app-url.com"
+
+# Инициализация бота и диспетчера
+bot = Bot(token=BOT_TOKEN)
+dp = Dispatcher()
+logging.basicConfig(level=logging.INFO)
+
+# Хэндлер на команду /start с двумя вариантами кнопок (инлайн и обычная)
+@dp.message(CommandStart())
+async def cmd_start(message: types.Message):
+    # 1. Вариант: Инлайн-кнопка (внутри сообщения)
+    inline_kb = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="Открыть Mini App 🚀", web_app=WebAppInfo(url=MINI_APP_URL))]
+    ])
+    
+    # 2. Вариант: Обычная кнопка (вместо клавиатуры)
+    reply_kb = ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="Запустить приложение 📱", web_app=WebAppInfo(url=MINI_APP_URL))]
+        ],
+        resize_keyboard=True
+    )
+
+    await message.answer(
+        "Привет! Используй кнопки ниже для запуска нашего Mini App:", 
+        reply_markup=inline_kb # или reply_kb, выберите нужный вариант
+    )
+
+# Код для запуска (обычно идет в самый конец файла)
+async def main():
+    print("Бот успешно запущен!")
+    await dp.start_polling(bot)
+
+if __name__ == "__main__":
+    asyncio.run(main())
 ```html
 <!DOCTYPE html>
 <html lang="ru">
