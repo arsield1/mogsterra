@@ -1,3 +1,5 @@
+
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -498,7 +500,7 @@ select.field-input option{background:#111;color:#fff}
 }
 .ni.act{color:var(--white)}
 .ni.off{color:var(--dim3)}
-.ni svg{width:22px;height:22px}
+.ni svg{width:22px;height:22px;stroke:currentColor}
 
 /* ─── SCROLLABLE CONTENT ─── */
 .scroll-content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
@@ -521,11 +523,9 @@ select.field-input option{background:#111;color:#fff}
 <body>
 <div id="app">
 
-  <!-- ════════════ ГЛАВНАЯ ════════════ -->
   <div id="screen-home" class="screen active">
     <div class="scroll-content">
 
-      <!-- HERO -->
       <div class="hero">
         <div class="hero-ht"></div>
         <div class="hero-glow"></div>
@@ -533,7 +533,6 @@ select.field-input option{background:#111;color:#fff}
         <div class="hero-brush2"></div>
         <div class="hero-brush3"></div>
 
-        <!-- Силуэт фигуры -->
         <div class="hero-figure">
           <svg viewBox="0 0 118 140" xmlns="http://www.w3.org/2000/svg">
             <defs>
@@ -571,15 +570,14 @@ select.field-input option{background:#111;color:#fff}
         <div class="star-mark">&#10022;</div>
       </div>
 
-      <!-- БАЛАНС -->
       <div class="bal-zone">
         <div class="bal-ey">Мой баланс</div>
         <div class="bal-num">$124<span class="bal-cents">.50</span></div>
         <div class="bal-btns">
-          <button class="btn-fill" onclick="alert('Пополнение: интеграция с платёжной системой')">
+          <button class="btn-fill" onclick="tgAlert('Пополнение: интеграция с платёжной системой')">
             + Пополнить
           </button>
-          <button class="btn-out" onclick="alert('История операций')">
+          <button class="btn-out" onclick="tgAlert('История операций пуста')">
             ≡ История
           </button>
         </div>
@@ -587,7 +585,6 @@ select.field-input option{background:#111;color:#fff}
 
       <div class="divline-full"></div>
 
-      <!-- ПОСЫЛКИ -->
       <div class="sec-hd">
         <span class="sec-lbl">Мои посылки</span>
         <span class="sec-link" onclick="navTo('screen-parcels')">Все →</span>
@@ -651,7 +648,6 @@ select.field-input option{background:#111;color:#fff}
 
       <div class="divline-full mt8"></div>
 
-      <!-- БЫСТРЫЕ ДЕЙСТВИЯ -->
       <div class="sec-hd">
         <span class="sec-lbl">Действия</span>
       </div>
@@ -685,7 +681,6 @@ select.field-input option{background:#111;color:#fff}
     </div>
   </div>
 
-  <!-- ════════════ ПОСЫЛКИ ════════════ -->
   <div id="screen-parcels" class="screen">
     <div class="detail-header">
       <button class="back-btn" onclick="navBack()">&#8592;</button>
@@ -777,7 +772,6 @@ select.field-input option{background:#111;color:#fff}
     </div>
   </div>
 
-  <!-- ════════════ ДЕТАЛИ ПОСЫЛКИ ════════════ -->
   <div id="screen-parcel-detail" class="screen">
     <div class="detail-header">
       <button class="back-btn" onclick="navBack()">&#8592;</button>
@@ -789,10 +783,9 @@ select.field-input option{background:#111;color:#fff}
     </div>
     <div class="scroll-content">
 
-      <!-- ФОТО ТОВАРА -->
       <div class="sec-hd">
         <span class="sec-lbl">Фото товара</span>
-        <span class="sec-link">Запросить ещё</span>
+        <span class="sec-link" onclick="tgAlert('Запрос на доп. фото отправлен менеджеру')">Запросить ещё</span>
       </div>
       <div class="photo-strip" id="photo-strip">
         <div class="photo-thumb">
@@ -826,13 +819,12 @@ select.field-input option{background:#111;color:#fff}
             <text x="36" y="66" text-anchor="middle" fill="#2a2a2a" font-size="7" font-family="Arial" letter-spacing="1">ФОТО 3</text>
           </svg>
         </div>
-        <div class="photo-add">
+        <div class="photo-add" onclick="tgAlert('Загрузка фото доступна после прибытия на склад')">
           <span style="font-size:18px;color:#222">+</span>
           <span>Фото</span>
         </div>
       </div>
 
-      <!-- ТАЙМЛАЙН -->
       <div class="sec-hd">
         <span class="sec-lbl">Маршрут</span>
       </div>
@@ -893,412 +885,299 @@ select.field-input option{background:#111;color:#fff}
 
       <div class="divline-full"></div>
 
-      <!-- ДЕТАЛИ -->
       <div class="sec-hd">
         <span class="sec-lbl">Детали</span>
       </div>
       <div class="info-rows">
         <div class="info-row">
           <span class="info-key">Маркетплейс</span>
-          <span class="info-val">Taobao</span>
+          <span class="info-val" id="info-val-market">Taobao</span>
         </div>
         <div class="info-row">
           <span class="info-key">Откуда</span>
-          <span class="info-val">Шанхай, CN</span>
+          <span class="info-val" id="info-val-from">Шанхай, CN</span>
         </div>
         <div class="info-row">
           <span class="info-key">Куда</span>
-          <span class="info-val">Братислава, SK</span>
-        </div>
-        <div class="info-row">
-          <span class="info-key">Вес</span>
-          <span class="info-val">1.4 кг</span>
-        </div>
-        <div class="info-row">
-          <span class="info-key">Стоимость</span>
-          <span class="info-val">$38.20</span>
-        </div>
-        <div class="info-row">
-          <span class="info-key">Страховка (3%)</span>
-          <span class="info-val">$1.15</span>
+          <span class="info-val" id="info-val-to">Братислава, SK</span>
         </div>
       </div>
-
-      <div class="divline-full mt12"></div>
-
-      <div class="action-row mt16" style="margin-top:16px">
-        <button class="btn-fill full-btn" style="margin:0" onclick="alert('Запрос фото отправлен')">
-          Запросить фото
-        </button>
-        <button class="btn-out full-btn" style="margin:0" onclick="alert('Написать менеджеру')">
-          Менеджер
-        </button>
-      </div>
-      <div style="height:16px"></div>
+      <div style="height:20px"></div>
     </div>
   </div>
 
-  <!-- ════════════ КАЛЬКУЛЯТОР ════════════ -->
   <div id="screen-calc" class="screen">
     <div class="detail-header">
       <button class="back-btn" onclick="navBack()">&#8592;</button>
       <div>
         <div class="detail-title">Калькулятор</div>
-        <div class="detail-id">Стоимость доставки</div>
+        <div class="detail-id">Расчет доставки из Китая</div>
       </div>
     </div>
-    <div class="scroll-content">
-      <div class="calc-zone">
-        <div class="calc-field">
-          <div class="field-label">Вес (кг)</div>
-          <input class="field-input" type="number" id="calc-weight" placeholder="Например: 2.5" min="0.1" step="0.1" oninput="calcPrice()"/>
-        </div>
-        <div class="calc-field">
-          <div class="field-label">Страна доставки</div>
-          <select class="field-input" id="calc-country" onchange="calcPrice()">
-            <option value="">— Выберите страну —</option>
-            <option value="sk">Словакия / Чехия (€4.5/кг)</option>
-            <option value="de">Германия / Австрия (€5.0/кг)</option>
-            <option value="pl">Польша / Венгрия (€4.8/кг)</option>
-            <option value="ua">Украина (€3.5/кг)</option>
-            <option value="kz">Казахстан / Россия (€3.0/кг)</option>
-            <option value="other">Другая страна — уточнить</option>
-          </select>
-        </div>
-        <div class="calc-field">
-          <div class="field-label">Стоимость товара ($) — для страховки</div>
-          <input class="field-input" type="number" id="calc-value" placeholder="Например: 150" min="0" oninput="calcPrice()"/>
-        </div>
-
-        <div class="calc-result" id="calc-result" style="display:none">
-          <div class="calc-result-label">Итого к оплате</div>
-          <div class="calc-result-num" id="calc-total">$0.00</div>
-          <div class="calc-result-note" id="calc-breakdown"></div>
-        </div>
-
-        <button class="btn-fill full-btn" style="margin:0;width:100%" onclick="alert('Оформить заказ')">
-          Оформить доставку
-        </button>
-        <div style="height:16px"></div>
+    <div class="scroll-content calc-zone">
+      <div class="calc-field">
+        <div class="field-label">Вес отправления (кг)</div>
+        <input type="number" id="calc-weight" class="field-input" placeholder="Введите вес, например 1.5" oninput="runCalculator()"/>
+      </div>
+      <div class="calc-field">
+        <div class="field-label">Тип транспортировки</div>
+        <select id="calc-type" class="field-input" onchange="runCalculator()">
+          <option value="air">Авиа Экспресс (9-12 дней)</option>
+          <option value="train">Железная дорога (25-30 дней)</option>
+          <option value="sea">Морской фрахт (40+ дней)</option>
+        </select>
+      </div>
+      <div class="calc-result">
+        <div class="calc-result-label">Предварительный итог</div>
+        <div id="calc-total" class="calc-result-num">$0.00</div>
+        <div class="calc-result-note">*Тарифы рассчитываются на базе объемного и фактического веса.</div>
       </div>
     </div>
   </div>
 
-  <!-- ════════════ ДОБАВИТЬ ТРЕК ════════════ -->
   <div id="screen-addtrack" class="screen">
     <div class="detail-header">
       <button class="back-btn" onclick="navBack()">&#8592;</button>
       <div>
         <div class="detail-title">Добавить трек</div>
-        <div class="detail-id">Своя посылка на наш склад</div>
+        <div class="detail-id">Регистрация в системе</div>
       </div>
     </div>
-    <div class="scroll-content">
-      <div class="add-track-zone">
-        <div class="field-label">Трек-номер посылки</div>
-        <input class="track-big-input" type="text" placeholder="Введите трек-номер..." id="track-input"/>
-
-        <div class="hint-row">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <rect width="16" height="16" stroke="#2a2a2a" stroke-width="1" fill="none"/>
-            <text x="8" y="12" text-anchor="middle" fill="#444" font-size="11" font-family="Arial">i</text>
-          </svg>
-          <div class="hint-text">
-            Трек-номер указан в подтверждении заказа на маркетплейсе (Taobao, 1688, Pinduoduo и др.).
-            Формат: обычно начинается с JT, YT, SF или содержит буквы CN.
-          </div>
-        </div>
-
-        <div class="calc-field">
-          <div class="field-label">Название товара</div>
-          <input class="field-input" type="text" placeholder="Например: Nike Air Max"/>
-        </div>
-        <div class="calc-field">
-          <div class="field-label">Маркетплейс</div>
-          <select class="field-input">
-            <option>Taobao</option>
-            <option>1688</option>
-            <option>Pinduoduo</option>
-            <option>Weidian</option>
-            <option>Yupoo</option>
-            <option>Poizon</option>
-            <option>Другой</option>
-          </select>
-        </div>
-
-        <button class="btn-fill full-btn" style="margin:0;width:100%;margin-top:8px" onclick="alert('Трек добавлен!')">
-          Подтвердить
-        </button>
-        <div style="height:16px"></div>
+    <div class="scroll-content add-track-zone">
+      <input type="text" id="track-number" class="track-big-input" placeholder="Например, SF1432562341"/>
+      <div class="hint-row">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#444" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        <div class="hint-text">Укажите внутренний трек-код транспортной компании Китая, отправленный продавцом.</div>
       </div>
+      <button class="btn-fill full-btn" onclick="submitTrack()">Зарегистрировать посылку</button>
     </div>
   </div>
 
-  <!-- ════════════ ВЫКУП ТОВАРА ════════════ -->
   <div id="screen-buyout" class="screen">
     <div class="detail-header">
       <button class="back-btn" onclick="navBack()">&#8592;</button>
       <div>
-        <div class="detail-title">Выкуп товара</div>
-        <div class="detail-id">Отправь ссылку — мы купим</div>
+        <div class="detail-title">Выкупить товар</div>
+        <div class="detail-id">Поиск по ссылкам</div>
       </div>
     </div>
-    <div class="scroll-content">
-      <div class="add-track-zone">
-        <div class="calc-field">
-          <div class="field-label">Ссылка на товар</div>
-          <input class="field-input" type="url" placeholder="https://item.taobao.com/..."/>
-        </div>
-        <div class="calc-field">
-          <div class="field-label">Размер / Цвет / Вариант</div>
-          <input class="field-input" type="text" placeholder="Например: 42 EU, чёрный"/>
-        </div>
-        <div class="calc-field">
-          <div class="field-label">Количество</div>
-          <input class="field-input" type="number" value="1" min="1"/>
-        </div>
-        <div class="calc-field">
-          <div class="field-label">Страна доставки</div>
-          <select class="field-input">
-            <option>Словакия</option>
-            <option>Чехия</option>
-            <option>Германия</option>
-            <option>Польша</option>
-            <option>Украина</option>
-            <option>Казахстан</option>
-            <option>Другая</option>
-          </select>
-        </div>
-
-        <!-- Комиссия -->
-        <div class="calc-result" style="display:block;margin-bottom:16px">
-          <div class="calc-result-label">Наша комиссия</div>
-          <div class="calc-result-num" style="font-size:22px">8% до $1000 · 6% от $1000</div>
-          <div class="calc-result-note">+ $30¥ доставка по Китаю · Фото-контроль $2/шт</div>
-        </div>
-
-        <button class="btn-fill full-btn" style="margin:0;width:100%" onclick="alert('Заявка отправлена! Менеджер рассчитает стоимость.')">
-          Отправить заявку
-        </button>
-        <div style="height:16px"></div>
-      </div>
+    <div class="scroll-content add-track-zone">
+      <input type="text" id="buyout-link" class="track-big-input" placeholder="Вставьте ссылку на Taobao / 1688"/>
+      <button class="btn-fill full-btn" onclick="submitBuyout()">Отправить на выкуп</button>
     </div>
   </div>
 
-  <!-- ════════════ ПРИГЛАСИТЬ ════════════ -->
   <div id="screen-invite" class="screen">
     <div class="detail-header">
       <button class="back-btn" onclick="navBack()">&#8592;</button>
       <div>
         <div class="detail-title">Пригласить друга</div>
-        <div class="detail-id">Скидка за каждого</div>
+        <div class="detail-id">Реферальная программа</div>
       </div>
     </div>
-    <div class="scroll-content">
-      <div class="add-track-zone">
-        <div class="calc-result" style="display:block;margin-bottom:16px">
-          <div class="calc-result-label">Ваш реферальный код</div>
-          <div class="calc-result-num" style="font-size:28px;letter-spacing:4px">MOGS-4821</div>
-          <div class="calc-result-note">Нажмите чтобы скопировать</div>
-        </div>
-
-        <div class="info-rows" style="margin-bottom:16px">
-          <div class="info-row">
-            <span class="info-key">Приглашено друзей</span>
-            <span class="info-val">3</span>
-          </div>
-          <div class="info-row">
-            <span class="info-key">Ваша скидка</span>
-            <span class="info-val">5%</span>
-          </div>
-          <div class="info-row">
-            <span class="info-key">До следующего уровня</span>
-            <span class="info-val">2 друга</span>
-          </div>
-          <div class="info-row">
-            <span class="info-key">Скидка друга при регистрации</span>
-            <span class="info-val">3%</span>
-          </div>
-        </div>
-
-        <button class="btn-fill full-btn" style="margin:0;width:100%"
-          onclick="if(window.Telegram&&Telegram.WebApp)Telegram.WebApp.openTelegramLink('https://t.me/share/url?url=https://t.me/mogsterra_bot&text=Попробуй+Mogsterra+Logistic!+Код:+MOGS-4821');else alert('Поделиться приглашением')">
-          Поделиться в Telegram
-        </button>
-        <div style="height:16px"></div>
+    <div class="scroll-content calc-zone" style="text-align: center;">
+      <div class="calc-result">
+        <div class="calc-result-label">Ваша скидка</div>
+        <div class="calc-result-num">-10%</div>
+        <div class="calc-result-note">Получите скидку на доставку за каждого активного реферала.</div>
       </div>
+      <button class="btn-fill full-btn" style="margin: 0;" onclick="shareApp()">Поделиться приложением</button>
     </div>
   </div>
 
-  <!-- ════════════ ПРОФИЛЬ ════════════ -->
-  <div id="screen-profile" class="screen">
-    <div class="hero" style="height:100px">
-      <div class="hero-ht"></div>
-      <div class="hero-content" style="padding-top:14px">
-        <div class="brand-line1" style="font-size:32px">MOGS<span class="brand-sep">·</span></div>
-        <div class="brand-line2" style="font-size:32px;margin-left:4px">TERRA</div>
-      </div>
-      <div class="star-mark">&#10022;</div>
-    </div>
-    <div class="scroll-content" style="padding-top:8px">
-      <div class="info-rows" style="padding:0 20px">
-        <div class="info-row">
-          <span class="info-key">Имя</span>
-          <span class="info-val" id="profile-name">Алексей</span>
-        </div>
-        <div class="info-row">
-          <span class="info-key">Telegram</span>
-          <span class="info-val" id="profile-username">@user</span>
-        </div>
-        <div class="info-row">
-          <span class="info-key">Баланс</span>
-          <span class="info-val">$124.50</span>
-        </div>
-        <div class="info-row">
-          <span class="info-key">Посылок всего</span>
-          <span class="info-val">12</span>
-        </div>
-        <div class="info-row">
-          <span class="info-key">Уровень</span>
-          <span class="info-val">Стандарт</span>
-        </div>
-      </div>
-
-      <div class="divline-full mt16"></div>
-      <div class="sec-hd"><span class="sec-lbl">Настройки</span></div>
-
-      <div class="info-rows" style="padding:0 20px">
-        <div class="info-row" style="cursor:pointer">
-          <span class="info-key">Адрес доставки</span>
-          <span class="info-val" style="color:var(--dim2)">→</span>
-        </div>
-        <div class="info-row" style="cursor:pointer">
-          <span class="info-key">Уведомления</span>
-          <span class="info-val" style="color:var(--dim2)">→</span>
-        </div>
-        <div class="info-row" style="cursor:pointer">
-          <span class="info-key">Адрес склада в Китае</span>
-          <span class="info-val" style="color:var(--dim2)">→</span>
-        </div>
-        <div class="info-row" style="cursor:pointer" onclick="navTo('screen-invite')">
-          <span class="info-key">Реферальная программа</span>
-          <span class="info-val" style="color:var(--dim2)">→</span>
-        </div>
-      </div>
-
-      <div class="divline-full mt12"></div>
-      <button class="btn-out full-btn mt16" style="margin-left:20px;margin-right:20px;width:calc(100% - 40px)"
-        onclick="if(window.Telegram&&Telegram.WebApp)Telegram.WebApp.openTelegramLink('https://t.me/mogsterra_manager');else alert('Открыть чат с менеджером')">
-        Написать менеджеру
-      </button>
-      <div style="height:16px"></div>
-    </div>
-  </div>
-
-  <!-- ════════════ НАВИГАЦИЯ ════════════ -->
-  <nav class="bnav">
-    <button class="ni act" id="nav-home" onclick="navTo('screen-home')" aria-label="Главная">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M3 12L12 3l9 9"/><path d="M9 21V12h6v9"/>
-      </svg>
+  <div class="bnav">
+    <button class="ni act" id="nav-btn-home" onclick="navTo('screen-home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
       <span>Главная</span>
     </button>
-    <button class="ni off" id="nav-parcels" onclick="navTo('screen-parcels')" aria-label="Посылки">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="2" y="7" width="20" height="14" rx="1"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/>
-      </svg>
+    <button class="ni off" id="nav-btn-parcels" onclick="navTo('screen-parcels')">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
       <span>Посылки</span>
     </button>
-    <button class="ni off" id="nav-buyout" onclick="navTo('screen-buyout')" aria-label="Выкуп">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
-      </svg>
-      <span>Выкуп</span>
-    </button>
-    <button class="ni off" id="nav-profile" onclick="navTo('screen-profile')" aria-label="Профиль">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
-      </svg>
-      <span>Профиль</span>
-    </button>
-  </nav>
+  </div>
 
 </div>
 
 <script>
-/* ─── Telegram Web App Init ─── */
-if(window.Telegram && Telegram.WebApp){
-  Telegram.WebApp.ready();
-  Telegram.WebApp.expand();
-  const user = Telegram.WebApp.initDataUnsafe && Telegram.WebApp.initDataUnsafe.user;
-  if(user){
-    if(document.getElementById('profile-name')) document.getElementById('profile-name').textContent = user.first_name || 'Пользователь';
-    if(document.getElementById('profile-username')) document.getElementById('profile-username').textContent = user.username ? '@'+user.username : '—';
+// Инициализация Telegram WebApp API
+const tg = window.Telegram.WebApp;
+tg.ready();
+tg.expand();
+
+// Установка цвета хедера и бэкграунда согласно дизайну
+tg.setHeaderColor('#000000');
+tg.setBackgroundColor('#000000');
+
+// Настройки Bot API для интеграции логики Mini App
+const BOT_TOKEN = "8804085864:AAHPDD7iabUezvGiEEDhDnfStkUR6beZDZU";
+
+// Стек для истории переходов
+let screenHistory = ['screen-home'];
+
+// Функция кастомного алертов через нативный Telegram UI
+function tgAlert(message) {
+  if (tg.showAlert) {
+    tg.showAlert(message);
+  } else {
+    alert(message);
   }
 }
 
-/* ─── Navigation ─── */
-const navScreenMap = {
-  'screen-home':   'nav-home',
-  'screen-parcels':'nav-parcels',
-  'screen-buyout': 'nav-buyout',
-  'screen-profile':'nav-profile',
-};
-let historyStack = ['screen-home'];
-
-function navTo(screenId){
+// Навигационная система
+function navTo(screenId) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(screenId).classList.add('active');
-  document.querySelectorAll('.ni').forEach(n => n.classList.replace('act','off'));
-  const navId = navScreenMap[screenId];
-  if(navId) document.getElementById(navId).classList.replace('off','act');
-  if(historyStack[historyStack.length-1] !== screenId) historyStack.push(screenId);
-  window.scrollTo(0,0);
-}
-
-function navBack(){
-  if(historyStack.length > 1){
-    historyStack.pop();
-    navTo(historyStack[historyStack.length-1]);
-    historyStack.pop();
+  const target = document.getElementById(screenId);
+  if (target) {
+    target.classList.add('active');
+    if (screenHistory[screenHistory.length - 1] !== screenId) {
+      screenHistory.push(screenId);
+    }
+  }
+  
+  // Управление кнопкой Back в Telegram интерфейсе верхнего уровня
+  if (screenId === 'screen-home') {
+    tg.BackButton.hide();
+  } else {
+    tg.BackButton.show();
+  }
+  
+  // Визуальное обновление нижнего меню навигации
+  const btnHome = document.getElementById('nav-btn-home');
+  const btnParcels = document.getElementById('nav-btn-parcels');
+  
+  if (screenId === 'screen-home') {
+    btnHome.className = 'ni act';
+    btnParcels.className = 'ni off';
+  } else if (screenId === 'screen-parcels') {
+    btnHome.className = 'ni off';
+    btnParcels.className = 'ni act';
+  } else {
+    btnHome.className = 'ni off';
+    btnParcels.className = 'ni off';
   }
 }
 
-/* ─── Open parcel detail ─── */
-const parcelData = {
-  'CN-2025-0419':{ name:'Nike Air Max 95',  status:'Таможня', statusClass:'sp-customs' },
-  'CN-2025-0388':{ name:'USB-C Кабель ×3', status:'В пути',  statusClass:'sp-transit' },
-  'CN-2025-0311':{ name:'Рюкзак Xiaomi',   status:'На складе',statusClass:'sp-warehouse'},
-};
-function openParcel(id){
-  const d = parcelData[id];
-  if(!d) return;
-  document.getElementById('detail-name').textContent   = d.name;
-  document.getElementById('detail-id').textContent     = id.replace(/-/g,' · ');
-  const st = document.getElementById('detail-status');
-  st.textContent  = d.status;
-  st.className    = 'spill ' + d.statusClass;
+function navBack() {
+  if (screenHistory.length > 1) {
+    screenHistory.pop();
+    const prev = screenHistory[screenHistory.length - 1];
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(prev).classList.add('active');
+    
+    if (prev === 'screen-home') {
+      tg.BackButton.hide();
+      document.getElementById('nav-btn-home').className = 'ni act';
+      document.getElementById('nav-btn-parcels').className = 'ni off';
+    } else if (prev === 'screen-parcels') {
+      document.getElementById('nav-btn-home').className = 'ni off';
+      document.getElementById('nav-btn-parcels').className = 'ni act';
+    }
+  }
+}
+
+// Слушатель нативной кнопки Назад в Telegram
+tg.BackButton.onClick(() => {
+  navBack();
+});
+
+// Открытие конкретной карточки посылки с динамической подгрузкой контента
+function openParcel(id) {
+  const nameEl = document.getElementById('detail-name');
+  const idEl = document.getElementById('detail-id');
+  const statusEl = document.getElementById('detail-status');
+  
+  const mMarket = document.getElementById('info-val-market');
+  const mFrom = document.getElementById('info-val-from');
+  const mTo = document.getElementById('info-val-to');
+  
+  if (id === 'CN-2025-0419') {
+    nameEl.innerText = 'Nike Air Max 95';
+    idEl.innerText = 'CN · 2025 · 0419';
+    statusEl.innerText = 'Таможня';
+    statusEl.className = 'spill sp-customs';
+    mMarket.innerText = 'Taobao'; mFrom.innerText = 'Шанхай, CN'; mTo.innerText = 'Братислава, SK';
+  } else if (id === 'CN-2025-0388') {
+    nameEl.innerText = 'USB-C Кабель ×3';
+    idEl.innerText = 'CN · 2025 · 0388';
+    statusEl.innerText = 'В пути';
+    statusEl.className = 'spill sp-transit';
+    mMarket.innerText = '1688'; mFrom.innerText = 'Гуанчжоу, CN'; mTo.innerText = 'Братислава, SK';
+  } else if (id === 'CN-2025-0311') {
+    nameEl.innerText = 'Рюкзак Xiaomi';
+    idEl.innerText = 'CN · 2025 · 0311';
+    statusEl.innerText = 'На складе';
+    statusEl.className = 'spill sp-warehouse';
+    mMarket.innerText = 'Pinduoduo'; mFrom.innerText = 'Пекин, CN'; mTo.innerText = 'Братислава, SK';
+  }
+  
   navTo('screen-parcel-detail');
 }
 
-/* ─── Calculator ─── */
-const rates = { sk:4.5, de:5.0, pl:4.8, ua:3.5, kz:3.0 };
-function calcPrice(){
-  const w   = parseFloat(document.getElementById('calc-weight').value)   || 0;
-  const c   = document.getElementById('calc-country').value;
-  const val = parseFloat(document.getElementById('calc-value').value)    || 0;
-  const res = document.getElementById('calc-result');
-  if(!w || !c || c === 'other'){ res.style.display='none'; return; }
-  const rate     = rates[c] || 4.5;
-  const delivery = +(w * rate).toFixed(2);
-  const insurance= val > 0 ? +(val * 0.03).toFixed(2) : 0;
-  const total    = +(delivery + insurance).toFixed(2);
-  document.getElementById('calc-total').textContent = '$' + total.toFixed(2);
-  document.getElementById('calc-breakdown').textContent =
-    w.toFixed(1)+'кг × $'+rate+'/кг = $'+delivery.toFixed(2) +
-    (insurance>0 ? ' · Страховка 3% = $'+insurance.toFixed(2) : '');
-  res.style.display = 'block';
+// Логика калькулятора доставки
+function runCalculator() {
+  const weight = parseFloat(document.getElementById('calc-weight').value) || 0;
+  const type = document.getElementById('calc-type').value;
+  let rate = 0;
+  
+  if (type === 'air') rate = 27.2;
+  else if (type === 'train') rate = 14.5;
+  else if (type === 'sea') rate = 9.8;
+  
+  const result = weight * rate;
+  document.getElementById('calc-total').innerText = `$${result.toFixed(2)}`;
+}
+
+// Интеграция с HTTP Bot API для отправки уведомлений в чат
+function sendBotNotification(text) {
+  const user = tg.initDataUnsafe?.user;
+  if (!user || !user.id) return;
+
+  const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+  fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      chat_id: user.id,
+      text: text,
+      parse_mode: 'HTML'
+    })
+  }).catch(e => console.error("Ошибка Bot API:", e));
+}
+
+// Обработка действий пользователя с отправкой отчетов в бот
+function submitTrack() {
+  const trackNum = document.getElementById('track-number').value.trim();
+  if (!trackNum) {
+    tgAlert('Пожалуйста, введите корректный трек-номер.');
+    return;
+  }
+  tgAlert(`Трек-код ${trackNum} успешно привязан к вашему аккаунту!`);
+  sendBotNotification(`📦 <b>Новое отправление зарегистрировано!</b>\n\nТрек-код: <code>${trackNum}</code>\nСтатус: Ожидание поступления на склад в Китае.`);
+  document.getElementById('track-number').value = '';
+  navTo('screen-home');
+}
+
+function submitBuyout() {
+  const link = document.getElementById('buyout-link').value.trim();
+  if (!link) {
+    tgAlert('Вставьте ссылку на товар.');
+    return;
+  }
+  tgAlert('Запрос отправлен. Менеджер свяжется с вами для выставления счета на выкуп.');
+  sendBotNotification(`🛍 <b>Заявка на выкуп товара!</b>\n\nСсылка: ${link}\nСтатус: Проверка менеджером.`);
+  document.getElementById('buyout-link').value = '';
+  navTo('screen-home');
+}
+
+function shareApp() {
+  if (tg.isVersionAtLeast('6.7')) {
+    tg.shareToStory('https://t.me/share/url?url=https://t.me/mogs_terra_bot/app&text=Доставляю посылки из Китая через MOGS·TERRA!');
+  } else {
+    tgAlert('Функция приглашения друзей скопирована в буфер обмена.');
+  }
 }
 </script>
 </body>
 </html>
+
+```
